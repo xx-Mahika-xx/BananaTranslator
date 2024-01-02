@@ -1,29 +1,27 @@
-console.log("Script works")
+console.debug("Script works")
 
-var btnTranslate= document.querySelector("#btn-translate");
-var txtInput=document.querySelector("#txtarea");
-var outputDiv=document.querySelector("#output");
-var serverURL = "https://api.funtranslations.com/translate/minion.json"
+const btnTranslate = document.querySelector("#btn-translate");
+const txtInput = document.querySelector("#txtarea");
+const outputDiv = document.querySelector("#output");
+const serverURL = "https://api.funtranslations.com/translate/minion.json";
 
-function errorHandler(error){
-    console.log("Error Occured",error);
+function errorHandler(error) {
+    console.error("Error Occured", error);
     alert("Oops! Something went wrong. Try again later.");
 }
 
-function getTranslationURL(text){
-    return serverURL +"? "+"text=" + text
+function getTranslationURL(text) {
+    return `${serverURL}?text=${text}`
 }
 
-function clickHandler(){
-    console.log("Translate button clicked");
-    var Inputext = txtInput.value;
-    fetch(getTranslationURL(Inputext))
+function clickHandler() {
+    console.debug("Translate button clicked");
+    fetch(getTranslationURL(txtInput.value))
         .then(response => response.json())
         .then(json => {
-            var translatedText=json.contents.translated;
-            outputDiv.innerText=translatedText;
+            outputDiv.innerText = json.contents.translated; // json.contents.translated is the translated text
         })
         .catch(errorHandler)
 };
 
-btnTranslate.addEventListener("click",clickHandler)
+btnTranslate.addEventListener("click", clickHandler)
